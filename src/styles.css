@@ -200,7 +200,11 @@ button {
   display: grid;
   place-items: start center;
   padding: 122px 18px 28px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   pointer-events: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .contact-card-backdrop {
@@ -2059,6 +2063,7 @@ h1 {
   z-index: 80;
   inset: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   place-items: center;
   padding: clamp(12px, 3vw, 28px);
   overflow-x: hidden;
@@ -2080,6 +2085,7 @@ h1 {
   z-index: 2;
   display: grid;
   width: min(96vw, 1280px);
+  min-width: 0;
   max-width: 96vw;
   max-height: none;
   place-items: center;
@@ -2179,6 +2185,7 @@ h1 {
   position: relative;
   display: grid;
   width: 100%;
+  min-width: 0;
   place-items: center;
   overflow: visible;
   touch-action: pan-y;
@@ -2189,6 +2196,7 @@ h1 {
   position: relative;
   display: grid;
   width: min(72vw, calc((94vh - 24px) * 0.75), 680px);
+  min-width: 0;
   max-width: 100%;
   place-items: center;
   perspective: 1200px;
@@ -2281,13 +2289,13 @@ h1 {
   .poster-lightbox {
     align-items: start;
     overflow-x: hidden;
-    padding: 74px 10px 28px;
+    padding: clamp(58px, 10svh, 74px) 12px 28px;
   }
 
   .poster-lightbox .lightbox-close {
     position: fixed;
-    top: 18px;
-    right: 18px;
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
     transform: none;
   }
 
@@ -2303,7 +2311,7 @@ h1 {
 
   .carousel-stage {
     display: flex;
-    width: min(92vw, 430px);
+    width: min(calc(100vw - 40px), 430px);
     flex-direction: column;
     gap: 14px;
     perspective: none;
@@ -2311,17 +2319,18 @@ h1 {
 
   .carousel-stage.ratio-16-9,
   .carousel-stage.ratio-4-3 {
-    width: min(92vw, 680px);
+    width: min(calc(100vw - 40px), 680px);
   }
 
   .carousel-stage.ratio-1-1 {
-    width: min(92vw, 520px);
+    width: min(calc(100vw - 40px), 520px);
   }
 
   .lightbox-carousel .carousel-slide.lightbox-real-image {
     width: 100%;
     max-width: 100%;
     max-height: none;
+    border-width: 3px;
     opacity: 1;
     pointer-events: auto;
     filter: none;
@@ -2347,6 +2356,101 @@ h1 {
   .carousel-slide.is-far-next {
     cursor: default;
     transform: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .contact-card-layer {
+    padding: clamp(72px, 12svh, 88px) 14px 22px;
+    pointer-events: auto;
+  }
+
+  .contact-card {
+    width: min(100%, calc(100vw - 28px));
+    gap: 12px;
+    padding: 54px 14px 16px;
+    border-width: 3px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 0 #050505;
+  }
+
+  .contact-photo-slot {
+    width: 100%;
+    max-height: min(34svh, 220px);
+    aspect-ratio: 16 / 10;
+    border-width: 3px;
+    border-radius: 18px;
+    box-shadow: 4px 4px 0 #ffc527;
+  }
+
+  .contact-photo-slot img {
+    object-position: 50% 42%;
+    transform: scale(1.02);
+  }
+
+  .contact-card-content {
+    gap: 10px;
+  }
+
+  .contact-card-kicker {
+    padding: 4px 10px;
+    border-width: 2px;
+    font-size: 12px;
+  }
+
+  .contact-card h2 {
+    font-size: clamp(28px, 9vw, 38px);
+  }
+
+  .contact-info-line {
+    gap: 9px;
+    padding: 11px 12px;
+    border-width: 3px;
+    border-radius: 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 390px), (max-height: 700px) {
+  .poster-lightbox {
+    padding: clamp(50px, 9svh, 62px) 10px 22px;
+  }
+
+  .lightbox-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .carousel-stage,
+  .carousel-stage.ratio-16-9,
+  .carousel-stage.ratio-4-3,
+  .carousel-stage.ratio-1-1 {
+    width: min(calc(100vw - 44px), 390px);
+    gap: 12px;
+  }
+
+  .lightbox-carousel .carousel-slide.lightbox-real-image {
+    border-width: 3px;
+    border-radius: 8px;
+  }
+
+  .poster-lightbox .lightbox-close {
+    width: 38px;
+    height: 38px;
+    font-size: 26px;
+  }
+
+  .contact-card-layer {
+    padding: clamp(62px, 11svh, 78px) 12px 18px;
+  }
+
+  .contact-card {
+    width: min(100%, calc(100vw - 24px));
+    padding: 50px 12px 14px;
+  }
+
+  .contact-photo-slot {
+    max-height: min(30svh, 180px);
   }
 }
 
@@ -3869,8 +3973,8 @@ h1 {
   }
 
   .poster-lightbox .lightbox-close {
-    top: 18px;
-    right: 18px;
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
     transform: none;
   }
 
