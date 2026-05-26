@@ -2362,30 +2362,30 @@ h1 {
   .carousel-slide.is-previous {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(-18%) scale(0.78);
-    filter: none;
+    transform: translateY(-18%) scale(0.86);
+    filter: saturate(0.96) brightness(0.84);
   }
 
   .carousel-slide.is-next {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(18%) scale(0.78);
-    filter: none;
+    transform: translateY(18%) scale(0.86);
+    filter: saturate(0.96) brightness(0.84);
   }
 
   .carousel-slide.is-far-previous,
   .carousel-slide.is-far-next {
     opacity: 1;
     pointer-events: auto;
-    filter: none;
+    filter: saturate(0.92) brightness(0.78);
   }
 
   .carousel-slide.is-far-previous {
-    transform: translateY(-26%) scale(0.66);
+    transform: translateY(-28%) scale(0.74);
   }
 
   .carousel-slide.is-far-next {
-    transform: translateY(26%) scale(0.66);
+    transform: translateY(28%) scale(0.74);
   }
 
 }
