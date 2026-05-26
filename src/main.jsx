@@ -1077,6 +1077,14 @@ function LightboxCarousel({ images, ratio, title, onClose }) {
   const hasMultipleImages = images.length > 1;
 
   useEffect(() => {
+    images.forEach((image) => {
+      const preloadImage = new Image();
+      preloadImage.decoding = 'async';
+      preloadImage.src = image;
+    });
+  }, [images]);
+
+  useEffect(() => {
     setActiveIndex(0);
     setIsPaused(false);
     userInteracted.current = false;
@@ -1158,7 +1166,7 @@ function LightboxCarousel({ images, ratio, title, onClose }) {
 
         const dragDistanceX = event.clientX - dragStart.current.x;
         const dragDistanceY = event.clientY - dragStart.current.y;
-        if (Math.max(Math.abs(dragDistanceX), Math.abs(dragDistanceY)) > 8) {
+        if (Math.abs(dragDistanceX) > Math.abs(dragDistanceY) && Math.abs(dragDistanceX) > 8) {
           event.preventDefault();
         }
         setIsPaused(true);
@@ -1181,6 +1189,8 @@ function LightboxCarousel({ images, ratio, title, onClose }) {
             src={image}
             alt={`${title} ${imageIndex + 1}`}
             key={image}
+            loading="eager"
+            decoding="async"
             onClick={() => {
               userInteracted.current = true;
               setActiveIndex(imageIndex);

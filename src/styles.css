@@ -2061,6 +2061,10 @@ h1 {
   display: grid;
   place-items: center;
   padding: clamp(12px, 3vw, 28px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .lightbox-backdrop {
@@ -2077,7 +2081,7 @@ h1 {
   display: grid;
   width: min(96vw, 1280px);
   max-width: 96vw;
-  max-height: 94vh;
+  max-height: none;
   place-items: center;
   padding: 0;
   border: 0;
@@ -2177,7 +2181,7 @@ h1 {
   width: 100%;
   place-items: center;
   overflow: visible;
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
 }
 
@@ -2275,13 +2279,22 @@ h1 {
 
 @media (max-width: 900px) {
   .poster-lightbox {
-    padding: 10px;
+    align-items: start;
+    overflow-x: hidden;
+    padding: 74px 10px 28px;
+  }
+
+  .poster-lightbox .lightbox-close {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    transform: none;
   }
 
   .lightbox-panel {
     width: 100%;
     max-width: 100vw;
-    max-height: 100vh;
+    max-height: none;
   }
 
   .lightbox-carousel {
@@ -2289,41 +2302,51 @@ h1 {
   }
 
   .carousel-stage {
-    width: min(88vw, calc((92vh - 20px) * 0.66));
+    display: flex;
+    width: min(92vw, 430px);
+    flex-direction: column;
+    gap: 14px;
+    perspective: none;
   }
 
   .carousel-stage.ratio-16-9,
   .carousel-stage.ratio-4-3 {
-    width: min(96vw, calc((92vh - 20px) * 1.78));
+    width: min(92vw, 680px);
   }
 
   .carousel-stage.ratio-1-1 {
-    width: min(92vw, calc(92vh - 20px));
+    width: min(92vw, 520px);
+  }
+
+  .lightbox-carousel .carousel-slide.lightbox-real-image {
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    opacity: 1;
+    pointer-events: auto;
+    filter: none;
+    transform: none;
   }
 
   .lightbox-real-image.ratio-3-4,
   .lightbox-real-image.ratio-9-16 {
     width: 100%;
     max-width: 100%;
-    max-height: calc(92vh - 20px);
+    max-height: none;
   }
 
-  .carousel-slide.is-previous {
-    transform: translateY(-18%) scale(0.78);
+  .lightbox-carousel .carousel-slide.lightbox-real-image.ratio-3-4,
+  .lightbox-carousel .carousel-slide.lightbox-real-image.ratio-9-16 {
+    max-height: none;
   }
 
-  .carousel-slide.is-next {
-    transform: translateY(18%) scale(0.78);
-  }
-
-  .carousel-slide.is-far-previous {
-    opacity: 1;
-    transform: translateY(-26%) scale(0.66);
-  }
-
+  .carousel-slide.is-active,
+  .carousel-slide.is-previous,
+  .carousel-slide.is-next,
+  .carousel-slide.is-far-previous,
   .carousel-slide.is-far-next {
-    opacity: 1;
-    transform: translateY(26%) scale(0.66);
+    cursor: default;
+    transform: none;
   }
 }
 
@@ -3843,6 +3866,12 @@ h1 {
     width: 40px;
     height: 40px;
     font-size: 28px;
+  }
+
+  .poster-lightbox .lightbox-close {
+    top: 18px;
+    right: 18px;
+    transform: none;
   }
 
   .poster-frame:nth-child(n),
