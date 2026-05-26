@@ -2314,7 +2314,7 @@ h1 {
   .lightbox-carousel {
     width: 100%;
     gap: 0;
-    touch-action: pan-y pinch-zoom;
+    touch-action: none;
   }
 
   .carousel-stage {

@@ -1107,9 +1107,17 @@ function LightboxCarousel({ images, ratio, title, onClose }) {
 
     const dragDistanceX = event.clientX - dragStart.current.x;
     const dragDistanceY = event.clientY - dragStart.current.y;
-    const dominantDistance =
-      Math.abs(dragDistanceY) > Math.abs(dragDistanceX) ? dragDistanceY : dragDistanceX;
+    const isMobileLayout = window.matchMedia('(max-width: 900px)').matches;
+    const dominantDistance = isMobileLayout
+      ? dragDistanceY
+      : Math.abs(dragDistanceY) > Math.abs(dragDistanceX)
+        ? dragDistanceY
+        : dragDistanceX;
     dragStart.current = null;
+
+    if (isMobileLayout && Math.abs(dragDistanceY) <= Math.abs(dragDistanceX)) {
+      return;
+    }
 
     if (Math.abs(dominantDistance) < 36) {
       return;
@@ -1166,7 +1174,11 @@ function LightboxCarousel({ images, ratio, title, onClose }) {
 
         const dragDistanceX = event.clientX - dragStart.current.x;
         const dragDistanceY = event.clientY - dragStart.current.y;
-        if (Math.abs(dragDistanceX) > Math.abs(dragDistanceY) && Math.abs(dragDistanceX) > 8) {
+        const isMobileLayout = window.matchMedia('(max-width: 900px)').matches;
+        const shouldHoldGesture = isMobileLayout
+          ? Math.abs(dragDistanceY) > 8
+          : Math.abs(dragDistanceX) > Math.abs(dragDistanceY) && Math.abs(dragDistanceX) > 8;
+        if (shouldHoldGesture) {
           event.preventDefault();
         }
         setIsPaused(true);
